@@ -23,7 +23,7 @@ const Main = React.memo(
 
 
         return (
-            <div className='bg-black overflow-hidden'>
+            <div className='overflow-hidden'>
                 <div className='w-16 h-16 flex justify-center  items-center text-[44px] text-white bg-green-500 rounded-full fixed bottom-10 right-10 z-50 hover:scale-110 duration-300'>
                     <FaWhatsapp />
                 </div>
