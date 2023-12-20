@@ -15,7 +15,7 @@ import { FaWhatsapp } from 'react-icons/fa'
 import AOS from "aos";
 import 'aos/dist/aos.css'
 
-export const Main = React.memo(
+const Main = React.memo(
     () => {
         useEffect(() => {
             AOS.init({ duration: 1000 })
@@ -187,4 +187,7 @@ export const Main = React.memo(
         )
 
     }
-) 
+)
+
+Main.displayName = "Main"
+export default Main
