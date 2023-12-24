@@ -2,8 +2,9 @@ import { MdWatchLater, MdEmail } from 'react-icons/md'
 import { FaCheck, FaUserFriends, FaMapMarkerAlt, FaPhoneAlt } from 'react-icons/fa'
 
 export const Navigasi = [
-    { nav: "HomePage", link: "" },
+    { nav: "Home", link: "" },
     { nav: "AboutUs", link: "" },
+    { nav: "Mengapa Kami?", link: "" },
     { nav: "Locations", link: "" }
 ]
 

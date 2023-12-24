@@ -5,61 +5,119 @@ import { ContentRight } from '@/components/hero/contentRight'
 import { Judul } from '@/components/judul'
 import { Navigasi, items, items2 } from '@/constant/constant'
 import Image from 'next/image'
-import Link from 'next/link'
-import React, { useEffect } from 'react'
+import React, { MouseEvent, useCallback, useEffect, useRef, useState } from 'react'
 import { Items } from '@/components/items'
 import { InfoKami } from '@/components/infokami'
 import { Kontak } from '@/components/kontak'
 import { BiSolidQuoteAltLeft, BiSolidQuoteAltRight } from "react-icons/bi"
 import { FaWhatsapp } from 'react-icons/fa'
+import { IoMenu, IoClose } from 'react-icons/io5'
+import { MdLightMode as Light, MdOutlineNightlightRound as Dark } from 'react-icons/md'
 import AOS from "aos";
 import 'aos/dist/aos.css'
 
 const Main = React.memo(
     () => {
+        const [onTouch, setOnTouch] = useState<boolean>(false)
+        const [show, setShow] = useState<boolean>(false)
+        const [darkMode, setDarkMode] = useState<boolean>(false)
         useEffect(() => {
             AOS.init({ duration: 1000 })
         }, [])
 
+        const handelShowNav = useCallback(
+            () => {
+                setShow(!show)
+            }, [show])
 
+        const handelHumberger = useCallback(
+            (e: MouseEvent<HTMLDivElement>) => {
+                setShow(false)
+            }, [show])
+
+        function handelTargetScroll(value: string) {
+            const aksi = document.getElementById(value)
+            aksi?.scrollIntoView({ behavior: "smooth" })
+        }
         return (
-            <div className='overflow-hidden'>
-                <div className='w-16 h-16 flex justify-center  items-center text-[44px] text-white bg-green-500 rounded-full fixed bottom-10 right-10 z-50 hover:scale-110 duration-300'>
+            <div
+                onClick={handelHumberger}
+                className={`z-[99] min-h-screen ${darkMode ? 'bg-slate-900' : ""}`}>
+                <div
+                    onTouchStart={() => setOnTouch(true)}
+                    onTouchEnd={() => setOnTouch(false)}
+                    onTouchCancel={() => setOnTouch(false)}
+                    className={`${onTouch ? 'scale-110' : 'scale-100'} md:w-[64px] md:h-[64px] w-11 h-11 flex justify-center  items-center md:text-[44px] text-[32px] text-white bg-green-500 rounded-full fixed bottom-10 right-10 z-50 hover:scale-110  duration-300`}>
                     <FaWhatsapp />
                 </div>
-                <header className=''>
-                    <nav className=' md:px-16 hidden h-[100px] md:flex justify-between items-center overflow-hidden '>
-                        <section>
-                            <Image priority={true} loading='eager' className=' w-auto h-auto' src={'/logo.png'} width={122} height={70} alt='rental mobil makassar' />
+                <header className={`sticky top-0 ${darkMode ? 'bg-slate-900' : "bg-white"} shadow z-50 `}>
+                    <nav className=' md:px-16 md:h-[100px] h-[80px] px-4 flex justify-between items-center  '>
+                        <section className='md:w-32 w-[90px] overflow-hidden h-[70%]'>
+                            <div className='w-full h-full relative'>
+                                <Image blurDataURL='/logo.png' placeholder='blur' sizes='600' src={'/logo.png'} fill alt='rental mobil makassar' />
+
+                            </div>
                         </section>
-                        <section className='flex gap-6 items-center'>
+                        <div className='flex items-center gap-4'>
+                            <div className='md:hidden text-3xl h-8 w-8 flex items-center'>
+                                <input className='absolute w-8 h-8 opacity-0 cursor-pointer' type='checkbox' checked={show ? true : false} onChange={() => handelShowNav()} />
+                                <span className={`${darkMode ? 'text-kuning' : 'text-blue'}`}>{show ? <IoClose /> : <IoMenu />}</span>
+                            </div>
+                            <section className={` hidden left-0 py-8 md:py-0  w-full  md:flex md:flex-row flex-col gap-6 items-center text-blue `}>
+                                {Navigasi.map((value) => (
+                                    <div
+                                        className={`${darkMode ? ' hover:text-white hover:border-white' : ' hover:text-black hover:border-black'} cursor-pointer hover:border-b-2`}
+                                        onClick={() => handelTargetScroll(value.nav)}
+                                        key={value.nav}>
+                                        <div>{value.nav}</div>
+                                    </div>
+                                ))}
+                                <Button onClick={() => handelTargetScroll('unitkami')} className=' px-4 py-2 bg-kuning text-white font-medium rounded-full'>OrderNow</Button>
+                            </section>
+                            <section
+                                id='darkomde'
+                                onClick={() => setDarkMode(!darkMode)}
+                                className={` cursor-pointer text-[32px] ${darkMode ? 'text-kuning' : 'text-blue'}`}>
+                                {darkMode ? <Light /> : <Dark />}
+                            </section>
+                        </div>
+                    </nav>
+                    {show ?
+                        <section className={` md:hidden scale-y-100 duration-300 origin-top pb-8 border-b-4 border-blue w-full flex flex-col gap-6 items-center text-blue `}>
                             {Navigasi.map((value) => (
-                                <Link key={value.nav} href={value.link}>
+                                <div className=' cursor-pointer hover:border-b-2 hover:border-blue' onClick={() => handelTargetScroll(value.nav)} key={value.nav}>
                                     <div>{value.nav}</div>
-                                </Link>
+                                </div>
+                            ))}
+                            <Button onClick={() => handelTargetScroll('unitkami')} className=' px-4 py-2 bg-kuning text-white font-medium rounded-full'>OrderNow</Button>
+                        </section> :
+                        <section className={`absolute z-50 md:hidden scale-y-0 origin-top py-8 border-b-4 border-blue w-full flex flex-col gap-6 items-center text-blue `}>
+                            {Navigasi.map((value) => (
+                                <div key={value.nav}>
+                                    <div>{value.nav}</div>
+                                </div>
                             ))}
                             <Button className=' px-4 py-2 bg-kuning text-white font-medium rounded-full'>OrderNow</Button>
-                        </section>
-                    </nav>
+                        </section>}
                 </header>
 
-                <main>
-                    <section className='md:pl-16 px-6 md:flex md:h-[516px] md:overflow-hidden'>
-                        <ContentLeft dataAos="fade-right" />
+                <main className=' overflow-hidden'>
+                    <section id='Home' className='md:pl-16 px-6 md:flex md:h-[516px] md:overflow-hidden'>
+                        <ContentLeft klick={handelTargetScroll} dataAos="fade-right" />
                         <ContentRight dataAos='fade-left' />
                     </section>
 
                     <section data-aos='fade-up' className='md:px-16 md:mt-16 mt-20 border-t-4 rounded-t-[50px]'>
                         <div className='flex justify-center pt-10'>
-                            <Judul>AboutUs</Judul>
+                            <Judul id='AboutUs'>AboutUs</Judul>
                         </div>
-                        <div className='mt-[20px] h-[411px] md:flex'>
+                        <div className='mt-[20px] h-[411px] md:flex '>
                             <article className='md:w-1/2 flex justify-center items-center relative mt-16 '>
-                                <Image className='z-10 translate-x-4 md:w-auto md:h-auto w-[350px]' src={'/pariwisata.png'} width={500} height={200} alt="bus parawisata" />
-                                <div className='md:w-[400px] md:h-[350px] w-[300px] h-[300px] rotate-3 bg-kuning shadow-md rounded-3xl absolute'></div>
-                                <div className='md:w-[400px] md:h-[350px] w-[300px] h-[300px] -rotate-3 bg-kuning shadow-md rounded-3xl absolute'></div>
+                                <Image className='z-10 translate-x-4 md:w-auto md:h-auto w-[350px]' src={'/pariwisata.png'} blurDataURL='/pariwisata.png' placeholder='blur' width={500} height={200} alt="bus parawisata" loading='lazy' />
+                                <div className='md:w-[400px] md:h-[350px] w-[300px] h-[300px] rotate-3 bg-kuning shadow-md rounded-3xl absolute -z-10'></div>
+                                <div className='md:w-[400px] md:h-[350px] w-[300px] h-[300px] -rotate-3 bg-kuning shadow-md rounded-3xl absolute -z-10'></div>
                             </article>
-                            <article className='md:w-1/2 mt-16 md:mt-0  flex flex-col justify-center'>
+                            <article className='md:w-1/2 mt-16 md:mt-0  flex flex-col justify-center '>
                                 <div className='border-l-4 border-kuning md:pl-5 px-4 '>
                                     <h1 className='text-2xl font-bold text-blue'>Rental Mobil & Tour Makassar</h1>
                                     <p className='text-blue mt-6 text-[14px]'><span className='italic text-kuning text-lg font-semibold'>Cv.Rencard TalassaCity</span> adalah Perusahaan Rental Mobil dan Tour Terpercaya<br></br>
@@ -74,19 +132,19 @@ const Main = React.memo(
 
                     <section className='mt-64 md:mt-0'>
                         <div className='flex justify-center mt-16'>
-                            <Judul>Unit Kami</Judul>
+                            <Judul id='unitkami'>Unit Kami</Judul>
                         </div>
-                        <div className='md:flex mt-[50px] md:gap-6 md:flex-row flex flex-col gap-6'>
+                        <div className='md:flex mt-[50px] md:gap-6 md:flex-row flex flex-col gap-6 '>
 
                             <div className='flex md:w-1/2 flex-col gap-4 px-4 md:px-0'>
                                 {items.map((v) => (
-                                    <div data-aos='fade-right' key={v.namaMobil} className='md:h-[300px] w-full bg-slate-100 shadow-lg md:rounded-r-2xl rounded-2xl overflow-hidden relative'>
+                                    <div data-aos='fade-right' key={v.namaMobil} className='md:h-[300px] w-full bg-slate-100 shadow-lg md:rounded-r-2xl rounded-2xl overflow-hidden relative '>
                                         <div className='flex justify-center'>
                                             <h1 className='text-2xl pt-2 font-semibold border-b-2 max-w-[12rem] border-blue text-blue'>{v.namaMobil}</h1>
                                         </div>
                                         <div className='md:flex pt-4'>
                                             <div className='md:w-1/2 flex justify-center items-center h-full'>
-                                                <Image loading='lazy' className={`w-auto h-auto ${v.flip ? "-scale-x-100" : ""}`} src={v.img} width={258} height={181} alt={v.namaMobil}></Image>
+                                                <Image placeholder='blur' blurDataURL={v.img} loading='lazy' className={`w-auto h-auto ${v.flip ? "-scale-x-100" : ""}`} src={v.img} width={258} height={181} alt={v.namaMobil}></Image>
                                             </div>
                                             {v.item.map((val, i) => (
                                                 <div key={i} className='md:w-1/2 flex px-10 md:px-0 flex-col gap-4'>
@@ -97,7 +155,7 @@ const Main = React.memo(
                                             ))}
                                         </div>
                                         <div className='md:absolute bottom-0 w-full md:w-auto pt-5 right-0'>
-                                            <Button className='md:px-20 w-full py-2 text-white bg-kuning font-semibold text-lg md:rounded-tl-[30px]'>OrderNow</Button>
+                                            <Button className='md:px-20 w-full py-2 text-white bg-kuning  font-semibold text-lg md:rounded-tl-[30px]'>OrderNow</Button>
                                         </div>
                                     </div>
 
@@ -106,13 +164,13 @@ const Main = React.memo(
 
                             <div className='flex md:w-1/2 flex-col gap-4 px-4 md:px-0'>
                                 {items2.map((v) => (
-                                    <div data-aos='fade-left' key={v.namaMobil} className='md:h-[300px] w-full bg-slate-100 shadow-lg md:rounded-r-2xl rounded-2xl overflow-hidden relative'>
+                                    <div data-aos='fade-left' key={v.namaMobil} className='md:h-[300px] w-full bg-slate-100 shadow-lg md:rounded-r-2xl rounded-2xl overflow-hidden relative '>
                                         <div className='flex justify-center'>
                                             <h1 className='text-2xl pt-2 font-semibold border-b-2 max-w-[12rem] border-blue text-blue'>{v.namaMobil}</h1>
                                         </div>
                                         <div className='md:flex pt-4'>
                                             <div className='md:w-1/2 flex justify-center items-center h-full'>
-                                                <Image loading='lazy' className={`w-auto h-auto ${v.flip ? "-scale-x-100" : ""}`} src={v.img} width={258} height={181} alt={v.namaMobil}></Image>
+                                                <Image placeholder='blur' blurDataURL={v.img} loading='lazy' className={`w-auto h-auto ${v.flip ? "-scale-x-100" : ""}`} src={v.img} width={258} height={181} alt={v.namaMobil}></Image>
                                             </div>
                                             {v.item.map((val, i) => (
                                                 <div key={i} className='md:w-1/2 flex px-10 md:px-0 flex-col gap-4'>
@@ -134,7 +192,7 @@ const Main = React.memo(
 
                     <section className='mt-16'>
                         <div className='flex justify-center'>
-                            <Judul>Mengapa Memilih Kami?</Judul>
+                            <Judul id="Mengapa Kami?">Mengapa Memilih Kami?</Judul>
                         </div>
                         <div className='mt-[50px]'>
                             <div className='md:h-[440px] items-center bg-blue p-4'>
@@ -166,7 +224,7 @@ const Main = React.memo(
 
                     <section className='mt-16'>
                         <div className='flex justify-center'>
-                            <Judul>Kontak & Lokasi</Judul>
+                            <Judul id='Locations'>Kontak & Lokasi</Judul>
                         </div>
                         <div className='mt-[50px] md:flex'>
                             <div className='md:w-1/2 flex justify-center md:px-16 px-4'>
