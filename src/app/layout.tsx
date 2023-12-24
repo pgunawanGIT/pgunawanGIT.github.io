@@ -9,7 +9,7 @@ export const metadata: Metadata = {
   title: 'Rental Mobil Murah Makassar',
   description: 'cv.rencardtallasacity makassar adalah penyedia jasa rental mobil termurah dan terpercaya di area makassar yang berdiri sejak tahun 2000 an dan tentunya sudah banyak pengalaman yang berkaitan dengan jasa rental mobil.',
   icons: {
-    icon: ['/next.svg']
+    icon: '/logo.png'
   }
 }
 

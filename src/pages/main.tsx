@@ -15,6 +15,7 @@ import { IoMenu, IoClose } from 'react-icons/io5'
 import { MdLightMode as Light, MdOutlineNightlightRound as Dark } from 'react-icons/md'
 import AOS from "aos";
 import 'aos/dist/aos.css'
+import Link from 'next/link'
 
 const Main = React.memo(
     () => {
@@ -43,13 +44,15 @@ const Main = React.memo(
             <div
                 onClick={handelHumberger}
                 className={`z-[99] min-h-screen ${darkMode ? 'bg-slate-900' : ""}`}>
-                <div
-                    onTouchStart={() => setOnTouch(true)}
-                    onTouchEnd={() => setOnTouch(false)}
-                    onTouchCancel={() => setOnTouch(false)}
-                    className={`${onTouch ? 'scale-110' : 'scale-100'} md:w-[64px] md:h-[64px] w-11 h-11 flex justify-center  items-center md:text-[44px] text-[32px] text-white bg-green-500 rounded-full fixed bottom-10 right-10 z-50 hover:scale-110  duration-300`}>
-                    <FaWhatsapp />
-                </div>
+                <Link href={'https://wa.link/0wjqae'}>
+                    <div
+                        onTouchStart={() => setOnTouch(true)}
+                        onTouchEnd={() => setOnTouch(false)}
+                        onTouchCancel={() => setOnTouch(false)}
+                        className={`${onTouch ? 'scale-110' : 'scale-100'} md:w-[64px] md:h-[64px] w-11 h-11 flex justify-center  items-center md:text-[44px] text-[32px] text-white bg-green-500 rounded-full fixed bottom-10 right-10 z-50 hover:scale-110  duration-300`}>
+                        <FaWhatsapp />
+                    </div>
+                </Link>
                 <header className={`sticky top-0 ${darkMode ? 'bg-slate-900' : "bg-white"} shadow z-50 `}>
                     <nav className=' md:px-16 md:h-[100px] h-[80px] px-4 flex justify-between items-center  '>
                         <section className='md:w-32 w-[90px] overflow-hidden h-[70%]'>
@@ -155,7 +158,9 @@ const Main = React.memo(
                                             ))}
                                         </div>
                                         <div className='md:absolute bottom-0 w-full md:w-auto pt-5 right-0'>
-                                            <Button className='md:px-20 w-full py-2 text-white bg-kuning  font-semibold text-lg md:rounded-tl-[30px]'>OrderNow</Button>
+                                            <Link href={'https://wa.link/p51lx2'}>
+                                                <Button className='md:px-20 w-full py-2 text-white bg-kuning  font-semibold text-lg md:rounded-tl-[30px]'>OrderNow</Button>
+                                            </Link>
                                         </div>
                                     </div>
 
@@ -181,7 +186,9 @@ const Main = React.memo(
                                             ))}
                                         </div>
                                         <div className='md:absolute bottom-0 w-full md:w-auto pt-5 right-0'>
-                                            <Button className='md:px-20 w-full py-2 text-white bg-kuning font-semibold text-lg md:rounded-tl-[30px]'>OrderNow</Button>
+                                            <Link href={'https://wa.link/p51lx2'}>
+                                                <Button className='md:px-20 w-full py-2 text-white bg-kuning font-semibold text-lg md:rounded-tl-[30px]'>OrderNow</Button>
+                                            </Link>
                                         </div>
                                     </div>
 
