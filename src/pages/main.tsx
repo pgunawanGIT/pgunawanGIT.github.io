@@ -54,12 +54,14 @@ const Main = React.memo(
                     </div>
                 </Link>
                 <header className={`sticky top-0 ${darkMode ? 'bg-slate-900' : "bg-white"} shadow z-50 `}>
-                    <nav className=' md:px-16 md:h-[100px] h-[80px] px-4 flex justify-between items-center  '>
-                        <section className='md:w-32 w-[90px] overflow-hidden h-[70%]'>
-                            <div className='w-full h-full relative'>
+                    <nav className=' md:px-16 md:h-[80px] h-[60px] px-4 flex justify-between items-center  '>
+                        <section className=' flex gap-2 items-center overflow-hidden h-[70%]'>
+                            <div className='w-[100px] h-[100px] relative'>
                                 <Image blurDataURL='/logo.png' placeholder='blur' sizes='600' src={'/logo.png'} fill alt='rental mobil makassar' />
 
                             </div>
+                            <p className='text-blue font-bold'>Cv.RendCarTallasaCity <br></br>
+                                <span>Makassar</span></p>
                         </section>
                         <div className='flex items-center gap-4'>
                             <div className='md:hidden text-3xl h-8 w-8 flex items-center'>
@@ -106,6 +108,7 @@ const Main = React.memo(
 
                 <main className=' overflow-hidden'>
                     <section id='Home' className='md:pl-16 px-6 md:flex md:h-[516px] md:overflow-hidden'>
+
                         <ContentLeft klick={handelTargetScroll} dataAos="fade-right" />
                         <ContentRight dataAos='fade-left' />
                     </section>
@@ -126,7 +129,7 @@ const Main = React.memo(
                                     <p className='text-blue mt-6 text-[14px]'><span className='italic text-kuning text-lg font-semibold'>Cv.Rencard TalassaCity</span> adalah Perusahaan Rental Mobil dan Tour Terpercaya<br></br>
                                         di Kota Makassar yang sudah berpengalaman dalam menyediakan sarana<br></br>
                                         Transportasi yang Elegan, Bersih, dan Lengkap.<br></br><br></br>
-                                        Kami seiap Melayani dan Mengantar Anda ke Destinasi Wisata, Kunjungan Kerja, <br>
+                                        Kami siap Melayani dan Mengantar Anda ke Destinasi Wisata, Kunjungan Kerja, <br>
                                         </br>Event dan lain-lain selama Anda di Kota Makassar.</p>
                                 </div>
                             </article>
@@ -245,7 +248,7 @@ const Main = React.memo(
                         </div>
                     </section>
                 </main>
-                <footer className='py-10 bg-blue mt-16'>
+                <footer className='py-4 bg-blue mt-16'>
                     <p className='text-center text-white'>Cv.RendCar TallasaCity Makassar 2024. All Rights Reserved</p>
                 </footer>
             </div>
